@@ -1,13 +1,25 @@
-import express, { Application, Request, Response } from "express";
+import express from "express";
+import { ServerManager } from "./server-manager";
+import { Route } from "./dto/config-dto";
+import user from "./routes/user/user-route";
+class App {
+  private static routes: Route[];
+  public static main(): void {
+    this.routes = [
+      {
+        url: "/user",
+        module: user,
+      },
+    ];
 
-const app: Application = express();
+    const serverManager = new ServerManager({
+      app: express(),
+      port: 8080,
+      routes: this.routes,
+    });
 
-const port: number = 3001;
+    serverManager.run();
+  }
+}
 
-app.get("/test", (req: Request, res: Response) => {
-  res.send("test");
-});
-
-app.listen(port, function () {
-  console.log(`App is listening on port ${port} !`);
-});
+App.main();
