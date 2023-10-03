@@ -2,6 +2,7 @@ import express from "express";
 import { ServerManager } from "./server-manager";
 import { Route } from "./dto/config-dto";
 import user from "./controllers/user-controller";
+import board from "./controllers/board-controller";
 class App {
   private static routes: Route[];
   public static main(): void {
@@ -9,6 +10,10 @@ class App {
       {
         url: "/user",
         module: user,
+      },
+      {
+        url: "/board",
+        module: board,
       },
     ];
 
