@@ -57,4 +57,58 @@ describe("board service test", () => {
     // 결과 검증
     expect(result_board).toEqual(undefined);
   });
+  test("updateBoard 및 이후 게시판 내용 테스트", async () => {
+    const result = await BoardService.updateBoard(2, {
+      boardId: 2,
+      title: "12",
+      content: "b",
+    });
+    expect(result).toBe(true);
+    const result_board = await BoardService.findBoards();
+    expect(result_board).toEqual([
+      {
+        boardId: 1,
+        title: "12344",
+        content: "aaa",
+      },
+      {
+        boardId: 2,
+        title: "12",
+        content: "b",
+      },
+      {
+        boardId: 3,
+        title: "1234",
+        content: "ccc",
+      },
+      {
+        boardId: 4,
+        title: "1234",
+        content: "ddd",
+      },
+    ]);
+  });
+
+  test("deleteBoard 및 이후 게시판 내용 테스트", async () => {
+    const result = await BoardService.deleteBoard(2);
+    expect(result).toBe(true);
+    const result_board = await BoardService.findBoards();
+    expect(result_board).toEqual([
+      {
+        boardId: 1,
+        title: "12344",
+        content: "aaa",
+      },
+      {
+        boardId: 3,
+        title: "1234",
+        content: "ccc",
+      },
+      {
+        boardId: 4,
+        title: "1234",
+        content: "ddd",
+      },
+    ]);
+  });
 });
