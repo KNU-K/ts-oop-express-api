@@ -12,8 +12,8 @@ class BoardController {
     this.router.get("/", this.findBoards);
     this.router.get("/:boardId", this.findBoardById);
     this.router.post("/", this.createBoard);
-    //this.router.put("/:boardId", this.updateBoard);
-    //this.router.delete("/:boardId", this.deleteBoard);
+    this.router.put("/:boardId", this.updateBoard);
+    this.router.delete("/:boardId", this.deleteBoard);
   }
 
   private findBoards(req: Request, res: Response) {
@@ -21,7 +21,7 @@ class BoardController {
   }
 
   private findBoardById(req: Request, res: Response) {
-    const { boardId } = req.body;
+    const boardId: any = req.query.boardId;
     res.send(BoardService.findBoardById(boardId));
   }
 
@@ -36,8 +36,17 @@ class BoardController {
     }
   }
 
-  // private updateBoard(req: Request, res: Response) {}
-  //  private deleteBoard(req: Request, res: Response) {}
+  private async updateBoard(req: Request, res: Response) {
+    const boardId: any = req.query.boardId;
+    const { board } = req.body;
+
+    res.send(await BoardService.updateBoard(boardId, board));
+  }
+  private async deleteBoard(req: Request, res: Response) {
+    const boardId: any = req.query.boardId;
+
+    res.send(await BoardService.deleteBoard(boardId));
+  }
 }
 
 export default new BoardController().router;
