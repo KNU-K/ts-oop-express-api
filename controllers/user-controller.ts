@@ -13,8 +13,8 @@ class UserController {
     this.router.get("/", this.findAllUsers);
     this.router.get("/:userId", this.findUserById);
     this.router.post("/", this.createUser);
-    // this.router.put("/:userId", this.updateUser);
-    // this.router.delete("/:userId", this.deleteUser);
+    this.router.put("/:userId", this.updateUser);
+    this.router.delete("/:userId", this.deleteUser);
   }
 
   private findAllUsers(req: Request, res: Response) {
@@ -22,7 +22,7 @@ class UserController {
   }
 
   private findUserById(req: Request, res: Response) {
-    const { userId } = req.body;
+    const userId: any = req.query.userId;
     res.send(UserService.findUserById(userId));
   }
 
@@ -37,8 +37,13 @@ class UserController {
     }
   }
 
-  // private updateUser(req: Request, res: Response) {}
-  // private deleteUser(req: Request, res: Response) {}
+  private async updateUser(req: Request, res: Response) {
+    const user: UserDto = req.body;
+    const userId: any = req.query.userId;
+    const result = await UserService.updateUser(userId, user);
+    return res.send(result);
+  }
+  private deleteUser(req: Request, res: Response) {}
 }
 
 export default new UserController().router;

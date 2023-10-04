@@ -21,6 +21,23 @@ class UserService {
     if (user) return user;
     else return null;
   }
+  public static async updateUser(userId: string, updatedUser: UserDto) {
+    const userToUpdate = users.find((user) => user.userId === userId);
+    if (userToUpdate) {
+      userToUpdate.userPw = updatedUser.userPw;
+      userToUpdate.userName = updatedUser.userName;
+      return true;
+    }
+    return false;
+  }
+  public static async deleteUser(userId: string) {
+    try {
+      users = users.filter((user) => user.userId != userId);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
 }
 
 export { UserService };
