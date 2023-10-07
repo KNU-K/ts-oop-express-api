@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import { BoardService } from "../services/board-service";
+import { BoardDto } from "../dto/board-dto";
 
 class BoardController {
   public router: Router;
@@ -16,13 +17,13 @@ class BoardController {
     this.router.delete("/:boardId", this.deleteBoard);
   }
 
-  private findBoards(req: Request, res: Response) {
-    res.send(BoardService.findBoards());
+  private async findBoards(req: Request, res: Response) {
+    res.send(await BoardService.findBoards());
   }
 
-  private findBoardById(req: Request, res: Response) {
-    const boardId: any = req.query.boardId;
-    res.send(BoardService.findBoardById(boardId));
+  private async findBoardById(req: Request, res: Response) {
+    const boardId: number | undefined = Number(req.params.boardId);
+    res.send(await BoardService.findBoardById(boardId));
   }
 
   private async createBoard(req: Request, res: Response) {
@@ -37,13 +38,13 @@ class BoardController {
   }
 
   private async updateBoard(req: Request, res: Response) {
-    const boardId: any = req.query.boardId;
-    const { board } = req.body;
+    const boardId: number | undefined = Number(req.params.boardId);
+    const board: BoardDto = req.body;
 
     res.send(await BoardService.updateBoard(boardId, board));
   }
   private async deleteBoard(req: Request, res: Response) {
-    const boardId: any = req.query.boardId;
+    const boardId: number | undefined = Number(req.params.boardId);
 
     res.send(await BoardService.deleteBoard(boardId));
   }
