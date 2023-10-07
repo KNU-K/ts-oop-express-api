@@ -1,5 +1,4 @@
 import { UserDto } from "../dto/user-dto";
-
 let users: UserDto[] = [];
 
 class UserService {
@@ -11,7 +10,7 @@ class UserService {
       return false;
     }
   }
-  public static findAllUsers() {
+  public static async findAllUsers() {
     return users;
   }
   public static findUserById(userId: string) {
