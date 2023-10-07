@@ -3,3 +3,5 @@ interface BoardDto {
   title: string;
   content: string;
 }
+
+export { BoardDto };

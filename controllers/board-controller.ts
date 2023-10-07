@@ -26,7 +26,7 @@ class BoardController {
   }
 
   private async createBoard(req: Request, res: Response) {
-    const board: BoardDto = req.body;
+    const board: any = req.body;
     const result: boolean = await BoardService.createBoard(board);
 
     if (result) {
