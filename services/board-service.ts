@@ -16,7 +16,7 @@ class BoardService {
   public static async findBoards(): Promise<BoardDto[]> {
     return boards;
   }
-  public static async updateBoard(boardId: number, updatedBoard: any) {
+  public static async updateBoard(boardId: number, updatedBoard: BoardDto) {
     const board = boards.find((board) => boardId == board.boardId);
     if (board) {
       board.title = updatedBoard.title;
