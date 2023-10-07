@@ -17,13 +17,13 @@ class UserController {
     this.router.delete("/:userId", this.deleteUser);
   }
 
-  private findAllUsers(req: Request, res: Response) {
-    res.send(UserService.findAllUsers());
+  private async findAllUsers(req: Request, res: Response) {
+    res.send(await UserService.findAllUsers());
   }
 
-  private findUserById(req: Request, res: Response) {
-    const userId: any = req.query.userId;
-    res.send(UserService.findUserById(userId));
+  private async findUserById(req: Request, res: Response) {
+    const userId: string | undefined = req.params.userId;
+    res.send(await UserService.findUserById(userId));
   }
 
   private async createUser(req: Request, res: Response) {
@@ -39,11 +39,15 @@ class UserController {
 
   private async updateUser(req: Request, res: Response) {
     const user: UserDto = req.body;
-    const userId: any = req.query.userId;
+    const userId: string | undefined = req.params.userId;
     const result = await UserService.updateUser(userId, user);
     return res.send(result);
   }
-  private deleteUser(req: Request, res: Response) {}
+  private async deleteUser(req: Request, res: Response) {
+    const userId: string | undefined = req.params.userId;
+    const result = await UserService.deleteUser(userId);
+    return res.send(result);
+  }
 }
 
 export default new UserController().router;
