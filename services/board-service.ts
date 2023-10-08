@@ -1,6 +1,8 @@
+import { BoardDto } from "../dto/board-dto";
+
 let boards: BoardDto[] = [];
 class BoardService {
-  static async createBoard(board: BoardDto): Promise<boolean> {
+  static async createBoard(board: any): Promise<boolean> {
     try {
       boards.push(board);
       return true;
@@ -8,10 +10,10 @@ class BoardService {
       return false;
     }
   }
-  static findBoardById(boardId: number): BoardDto | undefined {
+  static async findBoardById(boardId: number) {
     return boards.find((board) => board.boardId == boardId);
   }
-  public static findBoards(): BoardDto[] {
+  public static async findBoards(): Promise<BoardDto[]> {
     return boards;
   }
   public static async updateBoard(boardId: number, updatedBoard: BoardDto) {

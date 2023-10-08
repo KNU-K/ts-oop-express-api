@@ -1,3 +1,5 @@
+import { promises } from "dns";
+import { BoardDto } from "../../dto/board-dto";
 import { BoardService } from "../../services/board-service";
 
 let boards: BoardDto[] = [];
@@ -34,17 +36,16 @@ describe("board service test", () => {
 
   test("findBoards 테스트", async () => {
     // 테스트 코드 실행
-    const result_board: BoardDto[] = BoardService.findBoards();
+    const result_board: BoardDto[] = await BoardService.findBoards();
 
     // 결과 검증
     expect(result_board).toEqual(boardMockSchema);
   });
   test("findBoardById 테스트", async () => {
     // findBoardById 메서드를 스파이
-    boardMockSchema.map((board) => {
-      const result_board: BoardDto | undefined = BoardService.findBoardById(
-        board.boardId
-      ); // 게시판 ID에 따라 변경
+    boardMockSchema.map(async (board) => {
+      const result_board: BoardDto | undefined =
+        await BoardService.findBoardById(board.boardId); // 게시판 ID에 따라 변경
       // 결과 검증
       expect(result_board).toEqual(board);
     });
@@ -52,7 +53,9 @@ describe("board service test", () => {
 
   test("findBoardById 못찾을 때 테스트", async () => {
     // 테스트 코드 실행
-    const result_board: BoardDto | undefined = BoardService.findBoardById(100); // 게시판 ID에 따라 변경
+    const result_board: BoardDto | undefined = await BoardService.findBoardById(
+      100
+    ); // 게시판 ID에 따라 변경
 
     // 결과 검증
     expect(result_board).toEqual(undefined);
