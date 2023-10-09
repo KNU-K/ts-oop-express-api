@@ -1,7 +1,6 @@
 import { connect } from "mongoose";
 import { UserDto } from "../dto/user-dto";
-
-let users: UserDto[] = [];
+import User from "../models/user";
 
 class UserService {
   private static users: UserDto[] = [];
@@ -20,7 +19,7 @@ class UserService {
     }
   }
   public static findAllUsers() {
-    return users;
+    return this.users;
   }
   public static findUserById(userId: string) {
     const user: UserDto | undefined = this.users.find(
