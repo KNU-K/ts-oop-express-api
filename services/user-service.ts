@@ -1,6 +1,7 @@
 import { connect } from "mongoose";
 import { UserDto } from "../dto/user-dto";
-import User from "../models/user";
+
+let users: UserDto[] = [];
 
 class UserService {
   private static users: UserDto[] = [];
@@ -18,8 +19,8 @@ class UserService {
       return false;
     }
   }
-  public static async findAllUsers() {
-    return this.users;
+  public static findAllUsers() {
+    return users;
   }
   public static findUserById(userId: string) {
     const user: UserDto | undefined = this.users.find(
