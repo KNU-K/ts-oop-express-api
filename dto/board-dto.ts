@@ -1,5 +1,7 @@
+import { Schema } from "mongoose";
+
 interface BoardDto {
-  boardId: number;
+  no: number;
   title: string;
   content: string;
 }
