@@ -3,6 +3,7 @@ import { ServerManager } from "./server-manager";
 import { Route } from "./dto/config-dto";
 import userController from "./controllers/user-controller";
 import boardController from "./controllers/board-controller";
+import { DB_URI } from "./configs/dotenv";
 const app = express();
 class App {
   private static routes: Route[] = [];
@@ -22,7 +23,7 @@ class App {
       app: app,
       port: 8080,
       routes: this.routes,
-      db_uri: "mongodb+srv://root:root@cluster0.oxoj0ip.mongodb.net/test",
+      db_uri: DB_URI,
     });
 
     serverManager.run();
