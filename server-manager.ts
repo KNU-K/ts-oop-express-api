@@ -6,36 +6,19 @@ import { UserService } from "./services/user-service";
 import { UserDto } from "./dto/user-dto";
 import Board from "./models/board";
 import { BoardService } from "./services/board-service";
+import { DBUtil } from "./utils/db-util";
 class ServerManager {
   private app: Application;
   private port: number;
+  private db: DBUtil;
   constructor(config: Config) {
     this.app = config.app;
     this.port = config.port;
+    this.db = new DBUtil(config.db_uri);
     this.initMiddleware();
-    this.initDatabase();
     config.routes.map((route: Route) => {
       this.app.use(route.url, route.module);
     });
-  }
-  private async initDatabase() {
-    await connect("mongodb+srv://root:root@cluster0.oxoj0ip.mongodb.net/test");
-
-    const findUsers: UserDto[] = (await User.find()).map((user) => ({
-      userId: user.userId,
-      userPw: user.userPw,
-      userName: user.userName,
-    }));
-    console.log(findUsers);
-    UserService.initUser(findUsers);
-
-    const findBoards = await Board.find();
-    console.log(findBoards);
-
-    BoardService.initBoard(findBoards);
-
-    console.log("user table loading succeed");
-    console.log("board table loading succeed");
   }
   private initMiddleware() {
     this.app.use(express.json());
