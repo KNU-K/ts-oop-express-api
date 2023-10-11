@@ -4,6 +4,8 @@ import mongoose, { ConnectOptions, connect } from "mongoose";
 import User from "./models/user";
 import { UserService } from "./services/user-service";
 import { UserDto } from "./dto/user-dto";
+import Board from "./models/board";
+import { BoardService } from "./services/board-service";
 class ServerManager {
   private app: Application;
   private port: number;
@@ -27,7 +29,13 @@ class ServerManager {
     console.log(findUsers);
     UserService.initUser(findUsers);
 
+    const findBoards = await Board.find();
+    console.log(findBoards);
+
+    BoardService.initBoard(findBoards);
+
     console.log("user table loading succeed");
+    console.log("board table loading succeed");
   }
   private initMiddleware() {
     this.app.use(express.json());
