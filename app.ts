@@ -22,6 +22,7 @@ class App {
       app: app,
       port: 8080,
       routes: this.routes,
+      db_uri: "mongodb+srv://root:root@cluster0.oxoj0ip.mongodb.net/test",
     });
 
     serverManager.run();
