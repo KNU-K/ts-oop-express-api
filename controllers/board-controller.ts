@@ -22,13 +22,14 @@ class BoardController {
   }
 
   private async findBoardById(req: Request, res: Response) {
-    const boardId: number | undefined = Number(req.params.boardId);
+    const boardId = req.params.boardId;
     res.send(await BoardService.findBoardById(boardId));
   }
 
   private async createBoard(req: Request, res: Response) {
-    const board: any = req.body;
-    const result: boolean = await BoardService.createBoard(board);
+    const { board, u_id } = req.body;
+    console.log(board);
+    const result: boolean = await BoardService.createBoard(board, u_id);
 
     if (result) {
       return res.send({ msg: "succeed" });
@@ -38,13 +39,13 @@ class BoardController {
   }
 
   private async updateBoard(req: Request, res: Response) {
-    const boardId: number | undefined = Number(req.params.boardId);
-    const board: BoardDto = req.body;
+    const boardId: string | undefined = req.params.boardId;
+    const board = req.body;
 
     res.send(await BoardService.updateBoard(boardId, board));
   }
   private async deleteBoard(req: Request, res: Response) {
-    const boardId: number | undefined = Number(req.params.boardId);
+    const boardId: string | undefined = req.params.boardId;
 
     res.send(await BoardService.deleteBoard(boardId));
   }
